@@ -6,7 +6,7 @@ int start() {
 	x = VBE->x_resolution / 2;
 	y = VBE->y_resolution / 2;
 	// String literals cannot be more than 61 characters.
-	char str1[] = "Willkommen bei Atomkraft OS!";
+	char str1[] = "Wilkommen bei Atomkraft OS!";
 	char *p = str1;
 
 	char characterBuffer[1000] = "\0";
@@ -20,18 +20,15 @@ int start() {
 	InitialiseIDT();
 
 	tasks[TasksLength].priority = 0;
-	tasks[TasksLength].type = task_type_void;
-	tasks[TasksLength].function_void = &ClearScreenTask;
+	tasks[TasksLength].function = &ClearScreenTask;
 	TasksLength++;
 
 	tasks[TasksLength].priority = 0;
-	tasks[TasksLength].type = task_type_void;
-	tasks[TasksLength].function_void = &DrawMouseTask;
+	tasks[TasksLength].function = &DrawMouseTask;
 	TasksLength++;
 
 	tasks[TasksLength].priority = 0;
-	tasks[TasksLength].type = task_type_string_buffer;
-	tasks[TasksLength].function_string_buffer = &HandleKeyboardTask;
+	tasks[TasksLength].function = &HandleKeyboardTask;
 	TasksLength++;
 	// TasksLength++;
 
