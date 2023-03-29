@@ -1,7 +1,7 @@
 [org 0x00]
 [bits 16]
 
-section code
+section .code
 
 .init:
     mov eax, 0x07c0
@@ -16,20 +16,25 @@ section code
 .clear:
     mov byte [es:eax], 0
     inc eax
-    mov byte [es:eax], 0x30
+    mov byte [es:eax], 0x80
     inc eax
 
     cmp eax, 2 * 25 * 80
 
     jl .clear
 
-mov eax, text1
+mov eax, .welcome
+mov ecx, 0 * 2 * 80
+push .end
 call .print
 
 .end:
     jmp $
 
 .print:
+    mov ebx, 0
+
+.print_main:
     mov dl, byte [eax + ebx]
     
     cmp dl, 0
@@ -41,13 +46,12 @@ call .print
     inc ecx
     inc ecx
     
-    jmp .print
+    jmp .print_main
 
 .print_end:
     ret
 
-text: db 'Hello world!', 0
-text1: db 'This is my first operating system programming experience!', 0
+.welcome: db 'Welcome to Atomkraft.', 0
 
 times 510 - ($ - $$) db 0x00 ; Pads the file with 0s, making the file the right size
 
