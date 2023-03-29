@@ -254,19 +254,19 @@ unsigned char ProcessScancode(int scancode) {
         
     else if (scancode ==  0x03)
         if (shift_pressed == TRUE)
-            return '\'';
+            return '"';
         else 
             return '2';
         
     else if (scancode ==  0x04)
         if (shift_pressed == TRUE)
-            return '^';
+            return '£';
         else 
             return '3';
         
     else if (scancode ==  0x05)
         if (shift_pressed == TRUE)
-            return '+';
+            return '$';
         else 
             return '4';
             
@@ -278,31 +278,31 @@ unsigned char ProcessScancode(int scancode) {
         
     else if (scancode == 0x07)
         if (shift_pressed == TRUE)
-            return '&';
+            return '^';
         else 
             return '6';
         
     else if (scancode == 0x08)
         if (shift_pressed == TRUE)
-            return '/';
+            return '&';
         else 
             return '7';
         
     else if (scancode == 0x09)
         if (shift_pressed == TRUE)
-            return '(';
+            return '*';
         else 
             return '8';
         
     else if (scancode == 0x0A)
         if (shift_pressed == TRUE)
-            return ')';
+            return '(';
         else 
             return '9';
         
     else if (scancode == 0x0B)
         if (shift_pressed == TRUE)
-            return '=';
+            return ')';
         else 
             return '0';
         
@@ -478,7 +478,7 @@ unsigned char ProcessScancode(int scancode) {
         
     else if (scancode == 0x29)
         if (shift_pressed == TRUE)
-            return ',';
+            return '¬';
         else 
             return '`';
         

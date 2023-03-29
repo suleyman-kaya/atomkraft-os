@@ -6,7 +6,7 @@ int start() {
 	x = VBE->x_resolution / 2;
 	y = VBE->y_resolution / 2;
 	// String literals cannot be more than 61 characters.
-	char str1[] = "Wilkommen bei Atomkraft OS!";
+	char str1[] = "Willkommen bei Atomkraft OS!";
 	char *p = str1;
 
 	char characterBuffer[1000] = "\0";
@@ -19,27 +19,25 @@ int start() {
 	InitialiseMouse();
 	InitialiseIDT();
 
+	tasks[TasksLength].priority = 0;
+	tasks[TasksLength].type = task_type_void;
+	tasks[TasksLength].function_void = &ClearScreenTask;
+	TasksLength++;
+
+	tasks[TasksLength].priority = 0;
+	tasks[TasksLength].type = task_type_void;
+	tasks[TasksLength].function_void = &DrawMouseTask;
+	TasksLength++;
+
+	tasks[TasksLength].priority = 0;
+	tasks[TasksLength].type = task_type_string_buffer;
+	tasks[TasksLength].function_string_buffer = &HandleKeyboardTask;
+	TasksLength++;
+	// TasksLength++;
+
+
 	while(1) {
-		char character = ProcessScancode(Scancode);
-
-		if (backspace_pressed == TRUE) {
-			characterBuffer[characterBufferLength - 1] = '\0';
-			characterBufferLength--;
-			backspace_pressed = FALSE;
-			Scancode = -1;
-		}
-		else if (character != '\0') {
-			characterBuffer[characterBufferLength] = character;
-			characterBuffer[characterBufferLength + 1] = '\0';
-			characterBufferLength++;
-			Scancode = -1;
-		}
-
-		ClearScreen(181.0f / 255.0f * 16.0f, 232.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
-		DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBufferPointer, 100, 100, 0, 0, 0);
-
-		// DrawRect(x, y, 10, 10, 0, 0, 0);
-		DrawMouse(x, y, 16, 100.0 / 255.0 * 32, 100.0 / 255.0 * 16);
+		ProcessTasks();
 
 		Flush();
 	}
