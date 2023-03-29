@@ -1,7 +1,6 @@
 all: bootloader
 
 bootloader:
-	mkdir boot/bin
 	nasm boot/boot.asm -f bin -o boot/bin/boot.bin
 	nasm boot/kernel_entry.asm -f elf -o boot/bin/kernel_entry.bin
 	
@@ -12,7 +11,7 @@ bootloader:
 	cat boot/bin/boot.bin boot/bin/kernel.bin > os.img
 
 clear:
-	rm -rf boot/bin
+	rm -f boot/boot.img
 
 run:
 	qemu-system-x86_64 -drive format=raw,file=os.img
