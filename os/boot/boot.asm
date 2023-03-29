@@ -3,52 +3,15 @@
 
 section code
 
-.init:
-    mov eax, 0xb800
-    mov es, eax
-    mov eax, 0 ; set eax to 0 -> i = 0
-    mov ebx, 0 ; Index of the character in the string that we are printing
-    mov ecx, 0 ; Actual address of the chracter on the screen memory
-    mov dl, 0 ; Actual value of the character that we are printing
-
-.clear:
-    mov byte [es:eax], 0
-    inc eax
-    mov byte [es:eax], 0x1F
-    inc eax
-
-    cmp eax, 2 * 25 * 80
-
-    jl .clear
-
-
-mov eax, welcome
-mov ecx, 0 * 2 * 80
-call .print
-
-jmp .switch
-
-.print:
-    mov ebx, 0
-
-.print_main:
-    mov dl, byte [eax + ebx]
-    
-    cmp dl, 0
-    je .print_end
-    
-    mov byte [es:ecx], dl
-
-    inc ebx
-    inc ecx
-    inc ecx
-    
-    jmp .print_main
-
-.print_end:
-    ret
-
 .switch:
+    mov bx, 0x1000 ; This is the location where the code is loaded from hard disk
+    mov ah, 0x02
+    mov al, 30 ; The number of sectors to read from hard disk
+    mov ch, 0x00
+    mov dh, 0x00
+    mov cl, 0x02
+    int 0x13
+
     cli ; Turh off the interrupts
     lgdt [gdt_descriptor] ; Load the GDT Table
 
@@ -56,9 +19,9 @@ jmp .switch
     or eax, 0x1
     mov cr0, eax ; Make the switch
 
-    jmp protected_start
+    jmp code_seg:protected_start
 
-welcome: db 'Willkommen bei Atomkraft OS!', 0
+welcome: db 'Willkommen bei Atomkraft OS', 0
 
 [bits 32]
 protected_start:
@@ -73,6 +36,7 @@ protected_start:
     mov ebp, 0x90000
     mov esp, ebp
 
+    call 0x1000
     jmp $
 
 gdt_begin:
