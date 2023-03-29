@@ -1,11 +1,9 @@
-[org 0x00]
+[org 0x7c00]
 [bits 16]
 
-section .code
+section code
 
 .init:
-    mov eax, 0x07c0
-    mov ds, eax
     mov eax, 0xb800
     mov es, eax
     mov eax, 0 ; set eax to 0 -> i = 0
@@ -16,20 +14,19 @@ section .code
 .clear:
     mov byte [es:eax], 0
     inc eax
-    mov byte [es:eax], 0x80
+    mov byte [es:eax], 0x1F
     inc eax
 
     cmp eax, 2 * 25 * 80
 
     jl .clear
 
-mov eax, .welcome
+
+mov eax, welcome
 mov ecx, 0 * 2 * 80
-push .end
 call .print
 
-.end:
-    jmp $
+jmp .switch
 
 .print:
     mov ebx, 0
@@ -51,7 +48,58 @@ call .print
 .print_end:
     ret
 
-.welcome: db 'Welcome to Atomkraft.', 0
+.switch:
+    cli ; Turh off the interrupts
+    lgdt [gdt_descriptor] ; Load the GDT Table
+
+    mov eax, cr0
+    or eax, 0x1
+    mov cr0, eax ; Make the switch
+
+    jmp protected_start
+
+welcome: db 'Willkommen bei Atomkraft OS!', 0
+
+[bits 32]
+protected_start:
+    mov ax, data_seg
+    mov ds, ax
+    mov ss, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+
+    ; Update the stack pointer
+    mov ebp, 0x90000
+    mov esp, ebp
+
+    jmp $
+
+gdt_begin:
+gdt_null_descriptor:
+    dd 0x00
+    dd 0x00
+gdt_code_seg:
+    dw 0xffff
+    dw 0x00
+    db 0x00
+    db 10011010b
+    db 11001111b
+    db 0x00
+gdt_data_seg:
+    dw 0xffff
+    dw 0x00
+    db 0x00
+    db 10010010b
+    db 11001111b
+    db 0x00
+gdt_end:
+gdt_descriptor:
+    dw gdt_end - gdt_begin - 1
+    dd gdt_begin
+
+code_seg equ gdt_code_seg - gdt_begin
+data_seg equ gdt_data_seg - gdt_begin
 
 times 510 - ($ - $$) db 0x00 ; Pads the file with 0s, making the file the right size
 
