@@ -71,11 +71,11 @@ void DrawMouse(int x, int y, int r, int g, int b) {
         0b1111111100,
         0b1111111000,
         0b1111110000,
-        0b1111111000,
-        0b1111011100,
-        0b1110001110,
-        0b1100000111,
-        0b1000000001,
+        0b1111100000,
+        0b1111000000,
+        0b1110000000,
+        0b1100000000,
+        0b1000000000,
     };
 
     int mouse_width = 10, mouse_height = 10;
@@ -91,6 +91,17 @@ void DrawMouse(int x, int y, int r, int g, int b) {
                 Draw(x + i, y + j, r, g, b);
 
             shift -= 1;
+        }
+    }
+}
+
+void DrawCircle(int x, int y, int radius, int r, int g, int b) {
+    int rr = radius*radius;
+
+    for (int j = -radius; j < radius; j++) {
+        for (int i = -radius; i < radius; i++) {
+            if ((i*i + j*j) <= rr)
+                Draw(x + i, y + j, r, g, b);
         }
     }
 }

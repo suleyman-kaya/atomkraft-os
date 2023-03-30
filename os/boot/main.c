@@ -6,7 +6,7 @@ int start() {
 	mx = VBE->x_resolution / 2;
 	my = VBE->y_resolution / 2;
 	// String literals cannot be more than 61 characters.
-	char str1[] = "Welcome to SaphireOS!\n\nText rendered by custom library.";
+	char str1[] = "Willkommen bei Atomkraft OS!";
 	char *p = str1;
 
 	char characterBuffer[1000] = "\0";
