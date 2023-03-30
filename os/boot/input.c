@@ -6,6 +6,7 @@ int left_clicked, right_clicked, middle_clicked;
 int current_byte = 0;
 uint8_t bytes[4] = { 0 };
 int mouse_speed = 7;
+int mouse_possessed_task_id = 0;
 
 int Scancode = -1;
 

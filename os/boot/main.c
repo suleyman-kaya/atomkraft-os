@@ -36,10 +36,22 @@ int start() {
 	TasksLength++;
 
 	tasks[TasksLength].priority = 0;
-	tasks[TasksLength].function = &HandleKeyboardTask;
+	tasks[TasksLength].taskId = TasksLength;
+	tasks[TasksLength].function = &TestGraphicalElementsTask;
+	iparams[TasksLength * task_params_length + 0] = 50;
+	iparams[TasksLength * task_params_length + 1] = 50;
+	iparams[TasksLength * task_params_length + 2] = 300;
+	iparams[TasksLength * task_params_length + 3] = 300;
+	iparams[TasksLength * task_params_length + 4] = 0;
+	iparams[TasksLength * task_params_length + 5] = 0;
+	iparams[TasksLength * task_params_length + 6] = 0;
 	TasksLength++;
 
 	tasks[TasksLength].priority = 0;
+	tasks[TasksLength].function = &HandleKeyboardTask;
+	TasksLength++;
+
+	tasks[TasksLength].priority = 5;
 	tasks[TasksLength].function = &DrawMouseTask;
 	TasksLength++;
 
