@@ -18,6 +18,18 @@ struct Task {
 struct Task tasks[256];
 int iparams[100] = {10};
 
+// Declare tasks over here
+void ProcessTasks();
+int NullTask();
+int TaskbarTask();
+int CloseTasks();
+int ClearScreenTask();
+int DrawProducersName();
+int AppWithButtonsTask();
+int DrawMouseTask();
+int HandleKeyboardTask();
+int TextEditorTask();
+
 void ProcessTasks() {
     int priority;
     int i = 0;
@@ -62,6 +74,45 @@ void ProcessTasks() {
 
 int NullTask(int taskId) {
     return 0;
+}
+
+int TaskbarTask(int taskId) {
+    VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
+    DrawRect(0, 0, VBE->x_resolution, 40, 16, 32, 16);
+
+    int i = iparams[taskId * task_params_length + 4];
+
+    char text[] = "GUI App\0";
+    if (DrawButton(0, 0, 65, 40, 0, 10, 16, text, 16, 32, 16, taskId) == TRUE) {
+        tasks[TasksLength].priority = 0;
+        tasks[TasksLength].taskId = TasksLength;
+        tasks[TasksLength].function = &AppWithButtonsTask;
+        iparams[TasksLength * task_params_length + 0] = i * 40;
+        iparams[TasksLength * task_params_length + 1] = i * 40;
+        iparams[TasksLength * task_params_length + 2] = 300;
+        iparams[TasksLength * task_params_length + 3] = 300;
+        iparams[TasksLength * task_params_length + 4] = 0;
+        iparams[TasksLength * task_params_length + 5] = 0;
+        iparams[TasksLength * task_params_length + 6] = 0;
+        TasksLength++;
+        iparams[taskId * task_params_length + 4]++;
+    }
+
+    char text1[] = "Text Editor\0";
+    if (DrawButton(75, 0, 100, 40, 0, 10, 16, text1, 16, 32, 16, taskId) == TRUE) {
+        tasks[TasksLength].priority = 0;
+        tasks[TasksLength].taskId = TasksLength;
+        tasks[TasksLength].function = &TextEditorTask;
+        iparams[TasksLength * task_params_length + 0] = i * 40;
+        iparams[TasksLength * task_params_length + 1] = i * 40;
+        iparams[TasksLength * task_params_length + 2] = 300;
+        iparams[TasksLength * task_params_length + 3] = 300;
+        iparams[TasksLength * task_params_length + 4] = 0;
+        iparams[TasksLength * task_params_length + 5] = 0;
+        iparams[TasksLength * task_params_length + 6] = 0;
+        TasksLength++;
+        iparams[taskId * task_params_length + 4]++;
+    }
 }
 
 void CloseTask(int taskId) {
@@ -116,7 +167,7 @@ int HandleKeyboardTask(int taskId, int x, int y) {
     return 0;
 }
 
-int TestGraphicalElementsTask(int taskId) {
+int AppWithButtonsTask(int taskId) {
     int* r = &iparams[taskId * task_params_length + 4];
     int* g = &iparams[taskId * task_params_length + 5];
     int* b = &iparams[taskId * task_params_length + 6];

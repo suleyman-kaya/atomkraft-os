@@ -29,32 +29,17 @@ int start() {
 	tasks[TasksLength].function = &DrawProducersName;
 	TasksLength++;
 
-	// Implementing a window with buttons
+	// Create a taskbar
 	tasks[TasksLength].priority = 0;
+	tasks[TasksLength].function = &TaskbarTask;
 	tasks[TasksLength].taskId = TasksLength;
-	tasks[TasksLength].function = &TestGraphicalElementsTask;
-	iparams[TasksLength * task_params_length + 0] = 10;
-	iparams[TasksLength * task_params_length + 1] = 10;
-	iparams[TasksLength * task_params_length + 2] = 300;
-	iparams[TasksLength * task_params_length + 3] = 300;
-	iparams[TasksLength * task_params_length + 4] = 0;
-	iparams[TasksLength * task_params_length + 5] = 0;
-	iparams[TasksLength * task_params_length + 6] = 0;
+	iparams[TasksLength * task_params_length + 0] = 0;
+	iparams[TasksLength * task_params_length + 1] = 0;
+	iparams[TasksLength * task_params_length + 2] = VBE->x_resolution;
+	iparams[TasksLength * task_params_length + 3] = 40;
+	iparams[TasksLength * task_params_length + 4] = 1;
 	TasksLength++;
-
-	// Implementing Text Editor.
-	tasks[TasksLength].priority = 0;
-	tasks[TasksLength].taskId = TasksLength;
-	tasks[TasksLength].function = &TextEditorTask;
-	iparams[TasksLength * task_params_length + 0] = 50;
-	iparams[TasksLength * task_params_length + 1] = 50;
-	iparams[TasksLength * task_params_length + 2] = 300;
-	iparams[TasksLength * task_params_length + 3] = 300;
-	iparams[TasksLength * task_params_length + 4] = 0;
-	iparams[TasksLength * task_params_length + 5] = 0;
-	iparams[TasksLength * task_params_length + 6] = 0;
-	TasksLength++;
-
+	
 	// Implementing mouse handler
 	tasks[TasksLength].priority = 5;
 	tasks[TasksLength].function = &DrawMouseTask;
