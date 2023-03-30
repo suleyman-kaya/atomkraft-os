@@ -24,6 +24,11 @@ int start() {
 	tasks[TasksLength].function = &ClearScreenTask;
 	TasksLength++;
 
+	// Draw producer's name
+	tasks[TasksLength].priority = 0;
+	tasks[TasksLength].function = &DrawProducersName;
+	TasksLength++;
+
 	// Implementing a window with buttons
 	tasks[TasksLength].priority = 0;
 	tasks[TasksLength].taskId = TasksLength;

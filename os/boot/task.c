@@ -78,6 +78,12 @@ int ClearScreenTask(int taskId) {
     return 0;
 }
 
+int DrawProducersName(int taskId){
+    char name[] = "Süleyman KAYA\0";
+    DrawString(getArialCharacter, font_arial_width, font_arial_height, name, 100, 100, 0, 0, 0);
+
+}
+
 int DrawMouseTask(int taskId) {
     DrawMouse(mx, my, 16, 100.0 / 255.0 * 32, 100.0 / 255.0 * 16);
 
