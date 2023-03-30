@@ -23,3 +23,10 @@ Installing and running AtomkraftOS on qemu-kvm:
 - Ring buffer
 - Multithreading
 - Maybe some sounds
+
+## Documentation
+Directory structure:
+- ![/boot](docs/boot.md)
+- ![makefile](docs/makefile.md)
+- os.img
+- os.img.lock
