@@ -84,7 +84,7 @@ int DrawMouseTask(int taskId) {
     return 0;
 }
 
-int HandleKeyboardTask(int taskId) {
+int HandleKeyboardTask(int taskId, int x, int y) {
     char* characterBuffer = tasks[taskId].ca1;
     int* characterBufferLength = &tasks[taskId].i1;
 
@@ -103,7 +103,9 @@ int HandleKeyboardTask(int taskId) {
         Scancode = -1;
     }
 
-    DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, 100, 100, 16, 32, 16);
+    DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, x + 20, y + 20, 16, 32, 16);
+
+    //DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, 100, 100, 16, 32, 16);
 
     return 0;
 }
@@ -177,6 +179,35 @@ int TestGraphicalElementsTask(int taskId) {
         *g = 31;
         *b = 16;
     }
+
+    return 0;
+}
+
+int TextEditorTask(int taskId) {
+    int* r = &iparams[taskId * task_params_length + 4];
+    int* g = &iparams[taskId * task_params_length + 5];
+    int* b = &iparams[taskId * task_params_length + 6];
+
+    int closeClicked = DrawWindow(
+        &iparams[taskId * task_params_length + 0],
+        &iparams[taskId * task_params_length + 1],
+        &iparams[taskId * task_params_length + 2],
+        &iparams[taskId * task_params_length + 3],
+        *r,
+        *g,
+        *b,
+        &iparams[taskId * task_params_length + 9],
+        taskId);
+
+    int x = iparams[taskId * task_params_length + 0];
+    int y = iparams[taskId * task_params_length + 1];
+    int width = iparams[taskId * task_params_length + 2];
+    int height = iparams[taskId * task_params_length + 3];
+
+    if(closeClicked == TRUE)
+        CloseTask(taskId);
+
+    HandleKeyboardTask(taskId, x, y);
 
     return 0;
 }

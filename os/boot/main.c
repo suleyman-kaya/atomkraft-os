@@ -19,10 +19,12 @@ int start() {
 	InitialiseMouse();
 	InitialiseIDT();
 
+	// First of all, creating a blank screen by cleaning it.
 	tasks[TasksLength].priority = 0;
 	tasks[TasksLength].function = &ClearScreenTask;
 	TasksLength++;
 
+	// Implementing a window with buttons
 	tasks[TasksLength].priority = 0;
 	tasks[TasksLength].taskId = TasksLength;
 	tasks[TasksLength].function = &TestGraphicalElementsTask;
@@ -35,9 +37,10 @@ int start() {
 	iparams[TasksLength * task_params_length + 6] = 0;
 	TasksLength++;
 
+	// Implementing Text Editor.
 	tasks[TasksLength].priority = 0;
 	tasks[TasksLength].taskId = TasksLength;
-	tasks[TasksLength].function = &TestGraphicalElementsTask;
+	tasks[TasksLength].function = &TextEditorTask;
 	iparams[TasksLength * task_params_length + 0] = 50;
 	iparams[TasksLength * task_params_length + 1] = 50;
 	iparams[TasksLength * task_params_length + 2] = 300;
@@ -47,10 +50,7 @@ int start() {
 	iparams[TasksLength * task_params_length + 6] = 0;
 	TasksLength++;
 
-	tasks[TasksLength].priority = 0;
-	tasks[TasksLength].function = &HandleKeyboardTask;
-	TasksLength++;
-
+	// Implementing mouse handler
 	tasks[TasksLength].priority = 5;
 	tasks[TasksLength].function = &DrawMouseTask;
 	TasksLength++;
