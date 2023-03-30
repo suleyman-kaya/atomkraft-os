@@ -90,12 +90,12 @@ int NullTask(int taskId) {
 
 int TaskbarTask(int taskId) {
     VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
-    DrawRect(0, 0, VBE->x_resolution, 40, 16, 32, 16);
+    DrawRect(0, 0, VBE->x_resolution, 40, 0, 153, 76);
 
     int i = iparams[taskId * task_params_length + 4];
 
     char text[] = "GUI App\0";
-    if (DrawButton(0, 0, 65, 40, 0, 10, 16, text, 16, 32, 16, taskId) == TRUE) {
+    if (DrawButton(0, 0, 65, 40, 0, 0, 255, text, 255, 255, 255, taskId) == TRUE) {
         tasks[TasksLength].priority = 0;
         tasks[TasksLength].taskId = TasksLength;
         tasks[TasksLength].function = &AppWithButtonsTask;
@@ -111,7 +111,7 @@ int TaskbarTask(int taskId) {
     }
 
     char text1[] = "Text Editor\0";
-    if (DrawButton(75, 0, 100, 40, 0, 10, 16, text1, 16, 32, 16, taskId) == TRUE) {
+    if (DrawButton(75, 0, 100, 40, 255, 255, 0, text1, 0, 0, 0, taskId) == TRUE) {
         tasks[TasksLength].priority = 0;
         tasks[TasksLength].taskId = TasksLength;
         tasks[TasksLength].function = &TextEditorTask;
@@ -119,15 +119,15 @@ int TaskbarTask(int taskId) {
         iparams[TasksLength * task_params_length + 1] = i * 40;
         iparams[TasksLength * task_params_length + 2] = 300;
         iparams[TasksLength * task_params_length + 3] = 300;
-        iparams[TasksLength * task_params_length + 4] = 0;
-        iparams[TasksLength * task_params_length + 5] = 0;
-        iparams[TasksLength * task_params_length + 6] = 0;
+        iparams[TasksLength * task_params_length + 4] = 255;
+        iparams[TasksLength * task_params_length + 5] = 255;
+        iparams[TasksLength * task_params_length + 6] = 255;
         TasksLength++;
         iparams[taskId * task_params_length + 4]++;
     }
 
     char text3[] = "Ball\0";
-    if (DrawButton(185, 0, 50, 40, 16, 10, 0, text3, 16, 32, 16, taskId) == TRUE) {
+    if (DrawButton(185, 0, 50, 40, 255, 0, 0, text3, 0, 0, 0, taskId) == TRUE) {
         tasks[TasksLength].priority = 0;
         tasks[TasksLength].taskId = TasksLength;
         tasks[TasksLength].function = &BouncingBallTask;
@@ -159,7 +159,8 @@ void CloseTask(int taskId) {
 
 
 int ClearScreenTask(int taskId) {
-    ClearScreen(181.0f / 255.0f * 16.0f, 232.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
+    //ClearScreen(0.0f / 255.0f * 16.0f, 0.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
+    ClearScreen(102,255,178);
     
     return 0;
 }
@@ -169,7 +170,7 @@ int ClearScreenTask(int taskId) {
 
 int DrawProducersName(int taskId){
     char name[] = "Atomkraft OS by Sueleyman Kaya\0";
-    DrawString(getArialCharacter, font_arial_width, font_arial_height, name, 100, 100, 0, 0, 0);
+    DrawString(getArialCharacter, font_arial_width, font_arial_height, name, 50, 100, 0, 0, 0);
 
 }
 
@@ -177,7 +178,7 @@ int DrawProducersName(int taskId){
 
 
 int DrawMouseTask(int taskId) {
-    DrawMouse(mx, my, 16, 100.0 / 255.0 * 32, 100.0 / 255.0 * 16);
+    DrawMouse(mx, my, 0, 0, 0);
 
     return 0;
 }
@@ -204,7 +205,7 @@ int HandleKeyboardTask(int taskId, int x, int y) {
         Scancode = -1;
     }
 
-    DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, x + 20, y + 20, 16, 32, 16);
+    DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, x + 20, y + 20, 0, 0, 0);
     //DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, 100, 100, 16, 32, 16);
 
     return 0;
@@ -244,7 +245,7 @@ int AppWithButtonsTask(int taskId) {
     char text4[] = "Terry Davis\0";
 
     if (DrawButton(x + 20, y + 20, 50, 20, 0, 32, 0,
-            text, 16, 32, 16, taskId
+            text, 255, 255, 255, taskId
     ) == TRUE) {
         *r = 0;
         *g = 0;
@@ -252,35 +253,35 @@ int AppWithButtonsTask(int taskId) {
     }
 
     if (DrawButton(x + 100, y + 20, 50, 20, 0, 32, 0,
-            text1, 16, 32, 16, taskId
+            text1, 255, 0, 0, taskId
     ) == TRUE) {
         *r = 16;
         *g = 31;
         *b = 16;
     }
 
-    if (DrawButton(x + 20, y + 50, 80, 20, 0, 32, 0,
-            text2, 16, 32, 16, taskId
+    if (DrawButton(x + 20, y + 50, 80, 20, 153, 51, 255,
+            text2, 255, 0, 255, taskId
     ) == TRUE) {
-        *r = 16;
-        *g = 31;
-        *b = 16;
+        *r = 153;
+        *g = 51;
+        *b = 255;
     }
 
-    if (DrawButton(x + 120, y + 50, 150, 20, 0, 32, 0,
-            text3, 16, 32, 16, taskId
+    if (DrawButton(x + 120, y + 50, 150, 20, 102, 255, 102,
+            text3, 0, 255, 0, taskId
     ) == TRUE) {
-        *r = 16;
-        *g = 31;
-        *b = 16;
+        *r = 102;
+        *g = 255;
+        *b = 102;
     }
 
-    if (DrawButton(x + 20, y + 100, 100, 20, 0, 32, 0,
-            text4, 16, 32, 16, taskId
+    if (DrawButton(x + 20, y + 100, 100, 20, 255, 255, 51,
+            text4, 0, 255, 255, taskId
     ) == TRUE) {
-        *r = 16;
-        *g = 31;
-        *b = 16;
+        *r = 255;
+        *g = 255;
+        *b = 51;
     }
 
     return 0;
