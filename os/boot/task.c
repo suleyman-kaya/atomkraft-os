@@ -15,8 +15,10 @@ struct Task {
     int (*function)(int);
 };
 
+
 struct Task tasks[256];
 int iparams[100] = {10};
+
 
 // Declare tasks over here
 void ProcessTasks();
@@ -29,6 +31,10 @@ int AppWithButtonsTask();
 int DrawMouseTask();
 int HandleKeyboardTask();
 int TextEditorTask();
+int BouncingBallTask();
+
+
+
 
 void ProcessTasks() {
     int priority;
@@ -72,9 +78,15 @@ void ProcessTasks() {
     }
 }
 
+
+
+
 int NullTask(int taskId) {
     return 0;
 }
+
+
+
 
 int TaskbarTask(int taskId) {
     VBEInfoBlock* VBE = (VBEInfoBlock*) VBEInfoAddress;
@@ -113,7 +125,27 @@ int TaskbarTask(int taskId) {
         TasksLength++;
         iparams[taskId * task_params_length + 4]++;
     }
+
+    char text3[] = "Ball\0";
+    if (DrawButton(185, 0, 50, 40, 16, 10, 0, text3, 16, 32, 16, taskId) == TRUE) {
+        tasks[TasksLength].priority = 0;
+        tasks[TasksLength].taskId = TasksLength;
+        tasks[TasksLength].function = &BouncingBallTask;
+        iparams[TasksLength * task_params_length + 0] = i * 40;
+        iparams[TasksLength * task_params_length + 1] = i * 40;
+        iparams[TasksLength * task_params_length + 2] = 300;
+        iparams[TasksLength * task_params_length + 3] = 300;
+        iparams[TasksLength * task_params_length + 4] = 0;
+        iparams[TasksLength * task_params_length + 5] = 20;
+        iparams[TasksLength * task_params_length + 6] = 30;
+        iparams[TasksLength * task_params_length + 7] = 5;
+        iparams[TasksLength * task_params_length + 8] = 5;
+        TasksLength++;
+    }
 }
+
+
+
 
 void CloseTask(int taskId) {
     tasks[taskId].function = &NullTask;
@@ -123,23 +155,35 @@ void CloseTask(int taskId) {
     iparams[taskId * task_params_length + 3] = 0;
 }
 
+
+
+
 int ClearScreenTask(int taskId) {
     ClearScreen(181.0f / 255.0f * 16.0f, 232.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
     
     return 0;
 }
 
+
+
+
 int DrawProducersName(int taskId){
-    char name[] = "Süleyman KAYA\0";
+    char name[] = "Atomkraft OS by Sueleyman Kaya\0";
     DrawString(getArialCharacter, font_arial_width, font_arial_height, name, 100, 100, 0, 0, 0);
 
 }
+
+
+
 
 int DrawMouseTask(int taskId) {
     DrawMouse(mx, my, 16, 100.0 / 255.0 * 32, 100.0 / 255.0 * 16);
 
     return 0;
 }
+
+
+
 
 int HandleKeyboardTask(int taskId, int x, int y) {
     char* characterBuffer = tasks[taskId].ca1;
@@ -161,11 +205,13 @@ int HandleKeyboardTask(int taskId, int x, int y) {
     }
 
     DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, x + 20, y + 20, 16, 32, 16);
-
     //DrawString(getArialCharacter, font_arial_width, font_arial_height, characterBuffer, 100, 100, 16, 32, 16);
 
     return 0;
 }
+
+
+
 
 int AppWithButtonsTask(int taskId) {
     int* r = &iparams[taskId * task_params_length + 4];
@@ -240,6 +286,9 @@ int AppWithButtonsTask(int taskId) {
     return 0;
 }
 
+
+
+
 int TextEditorTask(int taskId) {
     int* r = &iparams[taskId * task_params_length + 4];
     int* g = &iparams[taskId * task_params_length + 5];
@@ -267,4 +316,42 @@ int TextEditorTask(int taskId) {
     HandleKeyboardTask(taskId, x, y);
 
     return 0;
+}
+
+
+
+
+int BouncingBallTask(int taskId) {
+    int closeClicked = DrawWindow(
+        &iparams[taskId * task_params_length + 0],
+        &iparams[taskId * task_params_length + 1],
+        &iparams[taskId * task_params_length + 2],
+        &iparams[taskId * task_params_length + 3],
+        0,
+        0,
+        0,
+        &iparams[taskId * task_params_length + 9],
+        taskId);
+
+    
+    if(closeClicked == TRUE)
+        CloseTask(taskId);
+
+    int x = iparams[taskId * task_params_length + 0];
+    int y = iparams[taskId * task_params_length + 1];
+    int width = iparams[taskId * task_params_length + 2];
+    int height = iparams[taskId * task_params_length + 3];
+
+    iparams[taskId * task_params_length + 5] += iparams[taskId * task_params_length + 7];
+    iparams[taskId * task_params_length + 6] += iparams[taskId * task_params_length + 8];
+
+    if (iparams[taskId * task_params_length + 5] + 10 > iparams[taskId * task_params_length + 2] ||
+        iparams[taskId * task_params_length + 5] - 10 < 0)
+        iparams[taskId * task_params_length + 7] = -iparams[taskId * task_params_length + 7];
+
+    if (iparams[taskId * task_params_length + 6] + 10 > iparams[taskId * task_params_length + 3] ||
+        iparams[taskId * task_params_length + 6] - 10 < 20)
+        iparams[taskId * task_params_length + 8] = -iparams[taskId * task_params_length + 8];
+
+    DrawCircle(x + iparams[taskId * task_params_length + 5], y + iparams[taskId * task_params_length + 6], 10, 16, 32, 16);
 }
