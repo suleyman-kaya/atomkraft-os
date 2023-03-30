@@ -6,6 +6,7 @@
 This OS built and tested on Ubuntu 20.04
 
 Installing and running AtomkraftOS on qemu-kvm:
+
 `sh -c "$(curl -fsSL https://raw.githubusercontent.com/suleyman-kaya/atomkraft-os/main/installer.sh)"`
 
 ## Done:
