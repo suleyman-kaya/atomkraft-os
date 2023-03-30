@@ -37,7 +37,7 @@ section code
 
     jmp code_seg:protected_start
 
-welcome: db 'Willkommen bei Atomkraft OS!.', 0
+welcome: db 'Welcome to SaphireOS.', 0
 
 [bits 32]
 protected_start:
