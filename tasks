@@ -1,0 +1,25 @@
+int ClearScreenTask(int taskId) {
+
+    ClearScreen(0.0f / 255.0f * 16.0f, 255.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
+
+    // ClearScreen(181.0f / 255.0f * 16.0f, 232.0f / 255.0f * 32.0f, 255.0f / 255.0f * 16.0f);
+
+    
+
+    return 0;
+
+}
+
+
+
+int DrawMouseTask(int taskId) {
+
+    DrawMouse(x, y, 16, 0.0 / 255.0 * 32, 0.0 / 255.0 * 16);
+
+    //DrawMouse(x, y, 16, 100.0 / 255.0 * 32, 100.0 / 255.0 * 16);
+
+
+
+    return 0;
+
+}

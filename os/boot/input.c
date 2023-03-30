@@ -1,7 +1,7 @@
 
 #include <stdint.h>
 
-int x, y;
+int mx, my;
 int left_clicked, right_clicked, middle_clicked;
 int current_byte = 0;
 uint8_t bytes[4] = { 0 };
@@ -214,24 +214,24 @@ void HandleMousePacket() {
     middle_clicked = status & middle_click;
 
     if (change_x > 0)
-        x += 2;
+        mx += 2;
     else if (change_x < 0)
-        x -= 2;
+        mx -= 2;
 
     if (change_y > 0)
-        y -= 2;
+        my -= 2;
     else if (change_y < 0)
-        y += 2;
+        my += 2;
 
-    if (x < 0)
-        x = 0;
-    else if (x > VBE->x_resolution)
-        x = VBE->x_resolution;
+    if (mx < 0)
+        mx = 0;
+    else if (mx > VBE->x_resolution)
+        mx = VBE->x_resolution;
 
-    if (y < 0)
-        y = 0;
-    else if (y > VBE->y_resolution)
-        y = VBE->y_resolution;
+    if (my < 0)
+        my = 0;
+    else if (my > VBE->y_resolution)
+        my = VBE->y_resolution;
 }
 
 int shift_pressed = FALSE;
