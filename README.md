@@ -2,6 +2,12 @@
 
 ![screenshot.png](Screenshots/screenshot.png)
 
+## Installation instructions
+This OS built and tested on Ubuntu 20.04
+
+Installing and running AtomkraftOS on qemu-kvm:
+`sh -c "$(curl -fsSL https://raw.githubusercontent.com/suleyman-kaya/atomkraft-os/main/installer.sh)"`
+
 ## Done:
 - 32bits - protected mode [✅]
 - Keyboard and mouse interruptions [✅]
