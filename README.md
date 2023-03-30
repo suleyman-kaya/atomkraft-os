@@ -25,8 +25,4 @@ Installing and running AtomkraftOS on qemu-kvm:
 - Maybe some sounds
 
 ## Documentation
-Directory structure:
-- ![/boot](docs/boot.md)
-- ![makefile](docs/makefile.md)
-- os.img
-- os.img.lock
+Docs: ![/docs](https://github.com/suleyman-kaya/atomkraft-os/tree/main/docs)
