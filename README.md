@@ -18,6 +18,7 @@ Installing and running AtomkraftOS on qemu-kvm:
 - A parameter system to make development process easy to programmers [✅]
 
 ## To-do's:
+- Create a guide to help developers contrubuting
 - FAT file system
 - A shell
 - Ring buffer
