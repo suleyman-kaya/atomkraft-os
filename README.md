@@ -26,4 +26,4 @@ Installing and running AtomkraftOS on qemu-kvm:
 - Maybe some sounds
 
 ## Documentation
-Docs: ![/docs](https://github.com/suleyman-kaya/atomkraft-os/tree/main/docs)
+Docs: ![docs/](https://github.com/suleyman-kaya/atomkraft-os/tree/main/docs)
